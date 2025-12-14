@@ -5,7 +5,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import CyberBackground from "@/components/CyberBackground"
+import { KeyRound, Mail, ArrowRight, CheckCircle, ArrowLeft, AlertTriangle } from "lucide-react"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
@@ -38,80 +39,107 @@ export default function ForgotPasswordPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 p-4">
-        <Card className="w-full max-w-md border-rose-200 shadow-xl">
-          <CardContent className="pt-8 text-center">
-            <div className="text-6xl mb-4">📧</div>
-            <h2 className="text-2xl font-bold text-rose-600 mb-2">Check Your Email!</h2>
-            <p className="text-gray-600 mb-2">
-              We've sent a password reset link to <strong>{email}</strong>
-            </p>
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 text-sm text-left">
-              <p className="font-semibold text-amber-800 mb-2">⚠️ Important Notes:</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1">
-                <li>Check your spam/junk folder</li>
-                <li>Email may take a few minutes to arrive</li>
-                <li>Link expires in 24 hours</li>
-                <li>Using default email provider (2 emails/hour limit)</li>
-              </ul>
+      <div className="min-h-screen flex items-center justify-center bg-[#030712] p-4 relative overflow-hidden">
+        <CyberBackground />
+        <div className="w-full max-w-md relative z-10">
+          <div className="glass-card rounded-3xl p-8 text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-6">
+              <CheckCircle className="w-10 h-10 text-cyan-400" />
             </div>
+            <h2 className="text-2xl font-bold gradient-text mb-3">Check Your Email!</h2>
+            <p className="text-slate-400 mb-2">We&apos;ve sent a password reset link to</p>
+            <p className="text-cyan-400 font-medium mb-6">{email}</p>
+            
+            <div className="glass-card rounded-xl p-4 mb-6 text-left">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-amber-400 mb-2 text-sm">Important Notes:</p>
+                  <ul className="text-slate-400 text-sm space-y-1">
+                    <li>Check your spam/junk folder</li>
+                    <li>Email may take a few minutes to arrive</li>
+                    <li>Link expires in 24 hours</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
             <Link href="/login">
-              <Button className="bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600">
+              <Button className="cyber-button text-black font-semibold px-8">
+                <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Login
               </Button>
             </Link>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 p-4">
-      <Card className="w-full max-w-md border-rose-200 shadow-xl">
-        <CardHeader className="text-center space-y-2">
-          <div className="text-5xl mb-2">🔑</div>
-          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent">
-            Forgot Password?
-          </CardTitle>
-          <CardDescription className="text-rose-600">
-            Enter your email to reset your password
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#030712] p-4 relative overflow-hidden">
+      <CyberBackground />
+      
+      <div className="w-full max-w-md relative z-10">
+        <div className="glass-card rounded-3xl p-8 shadow-2xl">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 mb-6 animate-glow">
+              <KeyRound className="w-8 h-8 text-black" />
+            </div>
+            <h1 className="text-3xl font-bold gradient-text mb-2">Forgot Password?</h1>
+            <p className="text-slate-400">Enter your email to reset your password</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm border border-red-200">
+              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
                 {error}
               </div>
             )}
+            
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="border-rose-200 focus:border-rose-400"
-              />
+              <Label htmlFor="email" className="text-slate-300 text-sm font-medium">Email</Label>
+              <div className="relative">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  required
+                  className="pl-12 bg-slate-900/50 border-cyan-500/20 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 h-12 rounded-xl input-glow"
+                />
+              </div>
             </div>
+
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600"
+              className="w-full cyber-button text-black font-semibold h-12 rounded-xl text-base"
               disabled={loading}
             >
-              {loading ? "Sending..." : "Send Reset Link"}
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                  Sending...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  Send Reset Link
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              )}
             </Button>
           </form>
-          <div className="mt-6 text-center">
-            <Link href="/login" className="text-sm text-rose-600 hover:underline">
+
+          <div className="mt-8 text-center">
+            <Link href="/login" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors inline-flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
               Back to Login
             </Link>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }
