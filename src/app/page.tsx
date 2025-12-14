@@ -53,7 +53,7 @@ const getProductImage = (name: string, category: string): string => {
   }
   
   if (productName.includes("rainbow") || productName.includes("candies")) {
-    return "https://images.unsplash.com/photo-1559600630-08c018864142?w=800&q=80"
+    return "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?w=800&q=80"
   }
   
   if (category === "chocolate") {
@@ -177,7 +177,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {sweets.map((sweet) => (
                   <div key={sweet.id} className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-cyan-500/30">
-                    <div className="relative w-full h-52 bg-gradient-to-br from-slate-800/50 to-slate-900/50 overflow-hidden">
+                    <div className="relative w-full h-52 bg-slate-900/30 overflow-hidden">
                       <Image 
                         src={sweet.image_url} 
                         alt={sweet.name}
@@ -185,7 +185,6 @@ export default function HomePage() {
                         unoptimized
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent opacity-60" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold text-slate-100 mb-2">{sweet.name}</h3>
@@ -213,7 +212,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/20 border border-amber-500/30 flex items-center justify-center">
-                    <span className="text-2xl">&#127851;</span>
+                    <Candy className="w-6 h-6 text-amber-400" />
                   </div>
                   <div>
                     <h2 className="text-3xl font-bold text-slate-100">Chocolate Collection</h2>
@@ -224,7 +223,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {chocolates.map((chocolate) => (
                   <div key={chocolate.id} className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-amber-500/30">
-                    <div className="relative w-full h-52 bg-gradient-to-br from-amber-900/30 to-slate-900/50 overflow-hidden">
+                    <div className="relative w-full h-52 bg-slate-900/30 overflow-hidden">
                       <Image 
                         src={chocolate.image_url} 
                         alt={chocolate.name}
@@ -232,7 +231,6 @@ export default function HomePage() {
                         unoptimized
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent opacity-60" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold text-slate-100 mb-2">{chocolate.name}</h3>
