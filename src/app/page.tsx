@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import CyberBackground from "@/components/CyberBackground"
-import { Sparkles, ShoppingBag, ChevronRight, Package } from "lucide-react"
+import { Sparkles, ShoppingBag, ChevronRight, Package, Candy } from "lucide-react"
 
 type Sweet = {
   id: string
@@ -166,7 +166,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400/20 to-cyan-600/20 border border-cyan-500/30 flex items-center justify-center">
-                    <span className="text-2xl">&#127852;</span>
+                    <Candy className="w-6 h-6 text-cyan-400" />
                   </div>
                   <div>
                     <h2 className="text-3xl font-bold text-slate-100">Sweets Collection</h2>
