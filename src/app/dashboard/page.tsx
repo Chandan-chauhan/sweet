@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { createClient } from "@/lib/supabase/client"
+import CyberBackground from "@/components/CyberBackground"
+import { Sparkles, LogOut, ShoppingCart, Package, User } from "lucide-react"
 
 type Sweet = {
   id: string
@@ -56,7 +58,7 @@ export default function DashboardPage() {
     }
     
     init()
-  }, [])
+  }, [router])
 
   async function fetchProducts() {
     setLoading(true)
@@ -76,7 +78,7 @@ export default function DashboardPage() {
     })
 
     if (res.ok) {
-      alert("Purchase successful! 🎉")
+      alert("Purchase successful!")
       fetchProducts()
     } else {
       const data = await res.json()
@@ -96,93 +98,179 @@ export default function DashboardPage() {
   const otherSweets = sweets.filter(s => s.category !== "chocolate")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50">
-      <nav className="bg-white/80 backdrop-blur-sm border-b border-rose-200 sticky top-0 z-50">
+    <div className="min-h-screen bg-[#030712] relative overflow-hidden">
+      <CyberBackground />
+      
+      <nav className="glass-card sticky top-0 z-50 border-b border-cyan-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-3xl font-bold bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent">
-            🍭 Sweet Shop
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center animate-glow">
+              <Sparkles className="w-5 h-5 text-black" />
+            </div>
+            <span className="text-2xl font-bold gradient-text">Sweet Shop</span>
           </Link>
           <div className="flex items-center gap-4">
-            <span className="text-gray-600">Welcome, {user?.full_name || user?.email}</span>
-            <Button onClick={handleLogout} variant="outline" className="border-rose-200 hover:bg-rose-50">
+            <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-800/50 border border-cyan-500/20">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center">
+                <User className="w-4 h-4 text-black" />
+              </div>
+              <span className="text-slate-300 text-sm font-medium">{user?.full_name || user?.email}</span>
+            </div>
+            <Button 
+              onClick={handleLogout} 
+              variant="outline" 
+              className="border-cyan-500/30 bg-transparent text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
               Logout
             </Button>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 bg-clip-text text-transparent">
-            Your Sweet Shop
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="text-slate-100">Your </span>
+            <span className="gradient-text">Sweet Shop</span>
           </h1>
-          <p className="text-xl text-gray-600">
-            Browse and purchase your favorite treats!
-          </p>
+          <p className="text-xl text-slate-400">Browse and purchase your favorite treats</p>
         </div>
 
         {loading ? (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">🍬</div>
-            <p className="text-gray-600">Loading delicious treats...</p>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/30 animate-pulse mb-4">
+              <Package className="w-8 h-8 text-cyan-400" />
+            </div>
+            <p className="text-slate-400">Loading collection...</p>
           </div>
         ) : (
           <>
             <section className="mb-16">
-              <h2 className="text-4xl font-bold text-rose-600 mb-8">🍬 Sweets Collection</h2>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400/20 to-cyan-600/20 border border-cyan-500/30 flex items-center justify-center">
+                  <span className="text-2xl">&#127852;</span>
+                </div>
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-100">Sweets Collection</h2>
+                  <p className="text-slate-500">Handpicked delicacies</p>
+                </div>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {otherSweets.map((sweet) => (
-                  <Card key={sweet.id} className="border-rose-200 hover:shadow-xl transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="text-6xl mb-4 text-center">{sweet.image_url}</div>
-                      <h3 className="text-xl font-bold text-gray-800 mb-2">{sweet.name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{sweet.description}</p>
+                  <div key={sweet.id} className="glass-card rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02]">
+                    <div className="relative w-full h-48 bg-gradient-to-br from-slate-800/50 to-slate-900/50 flex items-center justify-center overflow-hidden">
+                      {sweet.image_url && !sweet.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) ? (
+                        <Image 
+                          src={sweet.image_url} 
+                          alt={sweet.name}
+                          fill
+                          unoptimized
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      ) : (
+                        <span className="text-6xl">{sweet.image_url || "&#127852;"}</span>
+                      )}
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-slate-100 mb-2">{sweet.name}</h3>
+                      <p className="text-slate-400 text-sm mb-4 line-clamp-2">{sweet.description}</p>
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-2xl font-bold text-rose-600">${sweet.price}</span>
-                        <span className="text-sm text-gray-500">Stock: {sweet.stock}</span>
+                        <span className="text-2xl font-bold gradient-text">${sweet.price}</span>
+                        <span className="text-xs text-slate-500 px-2 py-1 rounded-full bg-slate-800">Stock: {sweet.stock}</span>
                       </div>
                       <Button
                         onClick={() => handlePurchase(sweet.id)}
                         disabled={sweet.stock === 0 || purchaseLoading === sweet.id}
-                        className="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600"
+                        className="w-full cyber-button text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {purchaseLoading === sweet.id ? "Processing..." : sweet.stock === 0 ? "Out of Stock" : "Purchase"}
+                        {purchaseLoading === sweet.id ? (
+                          <span className="flex items-center gap-2">
+                            <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                            Processing...
+                          </span>
+                        ) : sweet.stock === 0 ? (
+                          "Out of Stock"
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <ShoppingCart className="w-4 h-4" />
+                            Purchase
+                          </span>
+                        )}
                       </Button>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 ))}
               </div>
               {otherSweets.length === 0 && (
-                <p className="text-center text-gray-500 py-10">No sweets available at the moment</p>
+                <div className="text-center py-16 glass-card rounded-2xl">
+                  <Package className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+                  <p className="text-slate-400">No sweets available at the moment</p>
+                </div>
               )}
             </section>
 
             <section>
-              <h2 className="text-4xl font-bold text-amber-600 mb-8">🍫 Chocolate Collection</h2>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/20 border border-amber-500/30 flex items-center justify-center">
+                  <span className="text-2xl">&#127851;</span>
+                </div>
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-100">Chocolate Collection</h2>
+                  <p className="text-slate-500">Artisan crafted chocolates</p>
+                </div>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {chocolates.map((chocolate) => (
-                  <Card key={chocolate.id} className="border-amber-200 hover:shadow-xl transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="text-6xl mb-4 text-center">{chocolate.image_url}</div>
-                      <h3 className="text-xl font-bold text-gray-800 mb-2">{chocolate.name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{chocolate.description}</p>
+                  <div key={chocolate.id} className="glass-card rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02]">
+                    <div className="relative w-full h-48 bg-gradient-to-br from-amber-900/30 to-slate-900/50 flex items-center justify-center overflow-hidden">
+                      {chocolate.image_url && !chocolate.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) ? (
+                        <Image 
+                          src={chocolate.image_url} 
+                          alt={chocolate.name}
+                          fill
+                          unoptimized
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      ) : (
+                        <span className="text-6xl">{chocolate.image_url || "&#127851;"}</span>
+                      )}
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-slate-100 mb-2">{chocolate.name}</h3>
+                      <p className="text-slate-400 text-sm mb-4 line-clamp-2">{chocolate.description}</p>
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-2xl font-bold text-amber-600">${chocolate.price}</span>
-                        <span className="text-sm text-gray-500">Stock: {chocolate.stock}</span>
+                        <span className="text-2xl font-bold text-amber-400">${chocolate.price}</span>
+                        <span className="text-xs text-slate-500 px-2 py-1 rounded-full bg-slate-800">Stock: {chocolate.stock}</span>
                       </div>
                       <Button
                         onClick={() => handlePurchase(chocolate.id)}
                         disabled={chocolate.stock === 0 || purchaseLoading === chocolate.id}
-                        className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+                        className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold disabled:opacity-50"
                       >
-                        {purchaseLoading === chocolate.id ? "Processing..." : chocolate.stock === 0 ? "Out of Stock" : "Purchase"}
+                        {purchaseLoading === chocolate.id ? (
+                          <span className="flex items-center gap-2">
+                            <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                            Processing...
+                          </span>
+                        ) : chocolate.stock === 0 ? (
+                          "Out of Stock"
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <ShoppingCart className="w-4 h-4" />
+                            Purchase
+                          </span>
+                        )}
                       </Button>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 ))}
               </div>
               {chocolates.length === 0 && (
-                <p className="text-center text-gray-500 py-10">No chocolates available at the moment</p>
+                <div className="text-center py-16 glass-card rounded-2xl">
+                  <Package className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+                  <p className="text-slate-400">No chocolates available at the moment</p>
+                </div>
               )}
             </section>
           </>
