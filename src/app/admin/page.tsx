@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { createClient } from "@/lib/supabase/client"
 import Image from "next/image"
+import CyberBackground from "@/components/CyberBackground"
+import { Sparkles, LogOut, Plus, Pencil, Trash2, Package, Shield, Mail, Lock, X } from "lucide-react"
 
 type Sweet = {
   id: string
@@ -250,10 +251,13 @@ export default function AdminPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-indigo-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">⏳</div>
-          <p className="text-gray-600">Loading...</p>
+      <div className="min-h-screen bg-[#030712] flex items-center justify-center relative overflow-hidden">
+        <CyberBackground />
+        <div className="text-center relative z-10">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/30 animate-pulse mb-4">
+            <Package className="w-8 h-8 text-cyan-400" />
+          </div>
+          <p className="text-slate-400">Loading...</p>
         </div>
       </div>
     )
@@ -261,243 +265,286 @@ export default function AdminPage() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-indigo-50 to-blue-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md border-purple-200 shadow-xl">
-          <CardHeader className="text-center space-y-2">
-            <div className="text-6xl">👑</div>
-            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              Admin Login
-            </CardTitle>
-            <p className="text-gray-600 text-sm">Enter your admin credentials</p>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
+      <div className="min-h-screen bg-[#030712] flex items-center justify-center p-4 relative overflow-hidden">
+        <CyberBackground />
+        <div className="w-full max-w-md relative z-10">
+          <div className="glass-card rounded-3xl p-8 shadow-2xl">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 mb-6 animate-glow">
+                <Shield className="w-8 h-8 text-black" />
+              </div>
+              <h1 className="text-3xl font-bold gradient-text mb-2">Admin Portal</h1>
+              <p className="text-slate-400">Enter your admin credentials</p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="admin@example.com"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  required
-                  className="border-purple-200 focus:border-purple-400"
-                />
+                <Label htmlFor="email" className="text-slate-300 text-sm font-medium">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="admin@example.com"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    required
+                    className="pl-12 bg-slate-900/50 border-cyan-500/20 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 h-12 rounded-xl input-glow"
+                  />
+                </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                  required
-                  className="border-purple-200 focus:border-purple-400"
-                />
+                <Label htmlFor="password" className="text-slate-300 text-sm font-medium">Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    required
+                    className="pl-12 bg-slate-900/50 border-cyan-500/20 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 h-12 rounded-xl input-glow"
+                  />
+                </div>
               </div>
               {loginError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-                  <p className="text-red-600 text-sm">{loginError}</p>
+                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+                  {loginError}
                 </div>
               )}
               <Button 
                 type="submit" 
                 disabled={loginLoading}
-                className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600"
+                className="w-full cyber-button text-black font-semibold h-12 rounded-xl"
               >
-                {loginLoading ? "Logging in..." : "Login"}
+                {loginLoading ? (
+                  <span className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                    Authenticating...
+                  </span>
+                ) : "Login to Admin"}
               </Button>
-              <div className="text-center pt-4 border-t border-purple-100">
-                <p className="text-sm text-gray-600 mb-2">Need an admin account?</p>
+              <div className="text-center pt-4 border-t border-cyan-500/20">
+                <p className="text-sm text-slate-500 mb-3">Need an admin account?</p>
                 <Button 
                   type="button"
                   variant="outline"
                   onClick={() => router.push("/admin/setup")}
-                  className="border-purple-200 hover:bg-purple-50"
+                  className="border-cyan-500/30 bg-transparent text-cyan-400 hover:bg-cyan-500/10"
                 >
                   Create Admin Account
                 </Button>
               </div>
             </form>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-indigo-50 to-blue-50">
-      <nav className="bg-white/80 backdrop-blur-sm border-b border-purple-200 sticky top-0 z-50">
+    <div className="min-h-screen bg-[#030712] relative overflow-hidden">
+      <CyberBackground />
+      
+      <nav className="glass-card sticky top-0 z-50 border-b border-cyan-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-            👑 Admin Dashboard
-          </h1>
-          <Button onClick={handleLogout} variant="outline" className="border-purple-200 hover:bg-purple-50">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center animate-glow">
+              <Shield className="w-5 h-5 text-black" />
+            </div>
+            <span className="text-2xl font-bold gradient-text">Admin Dashboard</span>
+          </div>
+          <Button 
+            onClick={handleLogout} 
+            variant="outline" 
+            className="border-cyan-500/30 bg-transparent text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-4xl font-bold text-purple-600">Product Management</h2>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <div className="flex justify-between items-center mb-10">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-100">Product Management</h2>
+            <p className="text-slate-500">Manage your store inventory</p>
+          </div>
           <Button 
             onClick={() => {
               setShowForm(!showForm)
               setEditingProduct(null)
               resetForm()
             }}
-            className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600"
+            className={showForm ? "border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20" : "cyber-button text-black font-semibold"}
+            variant={showForm ? "outline" : "default"}
           >
-            {showForm ? "Cancel" : "Add New Product"}
+            {showForm ? (
+              <>
+                <X className="w-4 h-4 mr-2" />
+                Cancel
+              </>
+            ) : (
+              <>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Product
+              </>
+            )}
           </Button>
         </div>
 
         {showForm && (
-          <Card className="mb-8 border-purple-200">
-            <CardHeader>
-              <CardTitle>{editingProduct ? "Edit Product" : "Add New Product"}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Product Name</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category</Label>
-                    <select
-                      id="category"
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
-                    >
-                      <option value="candy">Candy</option>
-                      <option value="chocolate">Chocolate</option>
-                      <option value="cake">Cake</option>
-                      <option value="cupcake">Cupcake</option>
-                    </select>
-                  </div>
-                </div>
+          <div className="glass-card rounded-2xl p-8 mb-10">
+            <h3 className="text-xl font-bold text-slate-100 mb-6">
+              {editingProduct ? "Edit Product" : "Add New Product"}
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="name" className="text-slate-300">Product Name</Label>
                   <Input
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
+                    className="bg-slate-900/50 border-cyan-500/20 text-slate-100 focus:border-cyan-400 h-12 rounded-xl"
                   />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="price">Price ($)</Label>
-                    <Input
-                      id="price"
-                      type="number"
-                      step="0.01"
-                      value={formData.price}
-                      onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="stock">Stock</Label>
-                    <Input
-                      id="stock"
-                      type="number"
-                      value={formData.stock.toString()}
-                      onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
-                      required
-                    />
-                  </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image">Product Image</Label>
-                  <Input
-                    id="image"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="cursor-pointer"
-                  />
-                  {imagePreview && (
-                    <div className="mt-4 relative w-48 h-48 border-2 border-purple-200 rounded-md overflow-hidden">
-                      <Image 
-                        src={imagePreview} 
-                        alt="Preview" 
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
+                  <Label htmlFor="category" className="text-slate-300">Category</Label>
+                  <select
+                    id="category"
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full bg-slate-900/50 border border-cyan-500/20 text-slate-100 rounded-xl px-4 h-12 focus:border-cyan-400 focus:outline-none"
+                  >
+                    <option value="candy">Candy</option>
+                    <option value="chocolate">Chocolate</option>
+                    <option value="cake">Cake</option>
+                    <option value="cupcake">Cupcake</option>
+                  </select>
                 </div>
-                <Button 
-                  type="submit" 
-                  disabled={uploading}
-                  className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600"
-                >
-                  {uploading ? "Uploading..." : editingProduct ? "Update Product" : "Add Product"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description" className="text-slate-300">Description</Label>
+                <Input
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  required
+                  className="bg-slate-900/50 border-cyan-500/20 text-slate-100 focus:border-cyan-400 h-12 rounded-xl"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="price" className="text-slate-300">Price ($)</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    step="0.01"
+                    value={formData.price}
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    required
+                    className="bg-slate-900/50 border-cyan-500/20 text-slate-100 focus:border-cyan-400 h-12 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="stock" className="text-slate-300">Stock</Label>
+                  <Input
+                    id="stock"
+                    type="number"
+                    value={formData.stock.toString()}
+                    onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
+                    required
+                    className="bg-slate-900/50 border-cyan-500/20 text-slate-100 focus:border-cyan-400 h-12 rounded-xl"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="image" className="text-slate-300">Product Image</Label>
+                <Input
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="bg-slate-900/50 border-cyan-500/20 text-slate-100 cursor-pointer file:bg-cyan-500/20 file:text-cyan-400 file:border-0 file:mr-4 file:px-4 file:py-2 file:rounded-lg"
+                />
+                {imagePreview && (
+                  <div className="mt-4 relative w-48 h-48 rounded-xl overflow-hidden border-2 border-cyan-500/30">
+                    <Image 
+                      src={imagePreview} 
+                      alt="Preview" 
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+              <Button 
+                type="submit" 
+                disabled={uploading}
+                className="w-full cyber-button text-black font-semibold h-12 rounded-xl"
+              >
+                {uploading ? "Uploading..." : editingProduct ? "Update Product" : "Add Product"}
+              </Button>
+            </form>
+          </div>
         )}
 
         {loading ? (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">⏳</div>
-            <p className="text-gray-600">Loading products...</p>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/30 animate-pulse mb-4">
+              <Package className="w-8 h-8 text-cyan-400" />
+            </div>
+            <p className="text-slate-400">Loading products...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
-              <Card key={product.id} className="border-purple-200">
-                <CardContent className="p-6">
-                  <div className="relative w-full h-48 mb-4 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-md overflow-hidden flex items-center justify-center">
-                    {product.image_url && !product.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) ? (
-                      <Image 
-                        src={product.image_url} 
-                        alt={product.name}
-                        fill
-                        unoptimized
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="text-6xl">{product.image_url || "🍬"}</div>
-                    )}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{product.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2">{product.description}</p>
-                  <p className="text-sm text-gray-500 mb-4">Category: {product.category}</p>
+              <div key={product.id} className="glass-card rounded-2xl overflow-hidden">
+                <div className="relative w-full h-48 bg-gradient-to-br from-slate-800/50 to-slate-900/50 flex items-center justify-center overflow-hidden">
+                  {product.image_url && !product.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) ? (
+                    <Image 
+                      src={product.image_url} 
+                      alt={product.name}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="text-6xl">{product.image_url || "&#127852;"}</span>
+                  )}
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-slate-100 mb-2">{product.name}</h3>
+                  <p className="text-slate-400 text-sm mb-2 line-clamp-2">{product.description}</p>
+                  <p className="text-xs text-slate-500 mb-4">Category: {product.category}</p>
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-purple-600">${product.price}</span>
-                    <span className="text-sm text-gray-500">Stock: {product.stock}</span>
+                    <span className="text-2xl font-bold gradient-text">${product.price}</span>
+                    <span className="text-xs text-slate-500 px-2 py-1 rounded-full bg-slate-800">Stock: {product.stock}</span>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <Button
                       onClick={() => handleEdit(product)}
                       variant="outline"
-                      className="flex-1"
+                      className="flex-1 border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10"
                     >
+                      <Pencil className="w-4 h-4 mr-2" />
                       Edit
                     </Button>
                     <Button
                       onClick={() => handleDelete(product.id)}
-                      variant="destructive"
-                      className="flex-1"
+                      variant="outline"
+                      className="flex-1 border-red-500/30 text-red-400 hover:bg-red-500/10"
                     >
+                      <Trash2 className="w-4 h-4 mr-2" />
                       Delete
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         )}
