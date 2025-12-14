@@ -176,7 +176,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {sweets.map((sweet) => (
-                  <div key={sweet.id} className="bg-slate-900/40 backdrop-blur-sm border border-slate-800/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-cyan-500/30">
+                  <div key={sweet.id} className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-cyan-500/30">
                     <div className="relative w-full h-52 bg-gradient-to-br from-slate-800/50 to-slate-900/50 overflow-hidden">
                       <Image 
                         src={sweet.image_url} 
@@ -223,7 +223,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {chocolates.map((chocolate) => (
-                  <div key={chocolate.id} className="bg-slate-900/40 backdrop-blur-sm border border-slate-800/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-amber-500/30">
+                  <div key={chocolate.id} className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-amber-500/30">
                     <div className="relative w-full h-52 bg-gradient-to-br from-amber-900/30 to-slate-900/50 overflow-hidden">
                       <Image 
                         src={chocolate.image_url} 
