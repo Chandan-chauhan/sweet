@@ -95,30 +95,42 @@ Sweet Shop is a premium e-commerce platform designed for selling artisan sweets 
 
 The home page features a premium design with a cyber-tech aesthetic, showcasing the product collections with realistic food photography. The navigation bar includes Login and Get Started buttons for easy access.
 
+---
+
 ### 2. Product Collections (Sweets & Chocolates)
 ![Product Collections - Sweets](https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Screenshot-2025-12-14-213836-1765733272608.png?width=8000&height=8000&resize=contain)
 
 Products are organized into two collections: Sweets Collection and Chocolate Collection. Each product card displays a high-quality image, name, description, price in Indian Rupees (₹), and stock availability.
+
+---
 
 ### 3. Registration Page
 ![Registration Page](https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Screenshot-2025-12-14-214041-1765733272236.png?width=8000&height=8000&resize=contain)
 
 Clean and modern registration form with fields for full name, email, password, and password confirmation. Includes Google OAuth option for quick sign-up.
 
+---
+
 ### 4. Email Verification
 ![Email Verification Screen](https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Screenshot-2025-12-14-214145-1765733273062.png?width=8000&height=8000&resize=contain)
 
 After registration, users receive a verification email and are shown a confirmation screen with the email address they registered with.
+
+---
 
 ### 5. Login Page
 ![Login Page](https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Screenshot-2025-12-14-214018-1765733272448.png?width=8000&height=8000&resize=contain)
 
 Secure login interface with email and password fields, Google OAuth option, and links to password reset and registration pages.
 
+---
+
 ### 6. User Dashboard
 ![User Dashboard](https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/Screenshot-2025-12-14-214316-1765733272348.png?width=8000&height=8000&resize=contain)
 
-Personalized dashboard for logged-in users showing available sweets and chocolates with purchase functionality.
+Personalized dashboard for logged-in users showing available sweets and chocolates with purchase functionality. Users can browse products and make purchases with real-time stock updates.
+
+---
 
 ### 7. Admin Dashboard
 ![Admin Dashboard](./screenshots/dashboard-admin.png)
