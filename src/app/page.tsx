@@ -28,8 +28,22 @@ export default function HomePage() {
         const res = await fetch("/api/sweets")
         const data = await res.json()
         
-        setSweets(data.filter((s: Sweet) => s.category !== "chocolate"))
-        setChocolates(data.filter((s: Sweet) => s.category === "chocolate"))
+        const sweetsData = data.filter((s: Sweet) => s.category !== "chocolate").map((s: Sweet) => ({
+          ...s,
+          image_url: s.image_url && !s.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) 
+            ? s.image_url 
+            : "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80"
+        }))
+        
+        const chocolatesData = data.filter((s: Sweet) => s.category === "chocolate").map((s: Sweet) => ({
+          ...s,
+          image_url: s.image_url && !s.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) 
+            ? s.image_url 
+            : "https://images.unsplash.com/photo-1511381939415-e44015466834?w=800&q=80"
+        }))
+        
+        setSweets(sweetsData)
+        setChocolates(chocolatesData)
       } catch (error) {
         console.error("Error fetching products:", error)
       } finally {
@@ -110,26 +124,20 @@ export default function HomePage() {
                 {sweets.map((sweet) => (
                   <div key={sweet.id} className="glass-card rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02]">
                     <div className="relative w-full h-52 bg-gradient-to-br from-slate-800/50 to-slate-900/50 overflow-hidden">
-                      {sweet.image_url && !sweet.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) ? (
-                        <Image 
-                          src={sweet.image_url} 
-                          alt={sweet.name}
-                          fill
-                          unoptimized
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-6xl opacity-80">{sweet.image_url || "&#127852;"}</span>
-                        </div>
-                      )}
+                      <Image 
+                        src={sweet.image_url} 
+                        alt={sweet.name}
+                        fill
+                        unoptimized
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent opacity-60" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold text-slate-100 mb-2">{sweet.name}</h3>
                       <p className="text-slate-400 text-sm mb-4 line-clamp-2">{sweet.description}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-2xl font-bold gradient-text">${sweet.price}</span>
+                        <span className="text-2xl font-bold gradient-text">₹{sweet.price}</span>
                         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
                           <Package className="w-3 h-3 text-cyan-400" />
                           <span className="text-xs text-cyan-400">{sweet.stock} left</span>
@@ -163,26 +171,20 @@ export default function HomePage() {
                 {chocolates.map((chocolate) => (
                   <div key={chocolate.id} className="glass-card rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02]">
                     <div className="relative w-full h-52 bg-gradient-to-br from-amber-900/30 to-slate-900/50 overflow-hidden">
-                      {chocolate.image_url && !chocolate.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) ? (
-                        <Image 
-                          src={chocolate.image_url} 
-                          alt={chocolate.name}
-                          fill
-                          unoptimized
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-6xl opacity-80">{chocolate.image_url || "&#127851;"}</span>
-                        </div>
-                      )}
+                      <Image 
+                        src={chocolate.image_url} 
+                        alt={chocolate.name}
+                        fill
+                        unoptimized
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent opacity-60" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold text-slate-100 mb-2">{chocolate.name}</h3>
                       <p className="text-slate-400 text-sm mb-4 line-clamp-2">{chocolate.description}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-2xl font-bold text-amber-400">${chocolate.price}</span>
+                        <span className="text-2xl font-bold text-amber-400">₹{chocolate.price}</span>
                         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
                           <Package className="w-3 h-3 text-amber-400" />
                           <span className="text-xs text-amber-400">{chocolate.stock} left</span>
