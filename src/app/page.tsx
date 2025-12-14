@@ -17,6 +17,64 @@ type Sweet = {
   stock: number
 }
 
+const getProductImage = (name: string, category: string): string => {
+  const productName = name.toLowerCase().trim()
+  
+  if (productName.includes("cheese cake") || productName.includes("cheesecake")) {
+    return "https://images.unsplash.com/photo-1533134486753-c833f0ed4866?w=800&q=80"
+  }
+  
+  if (productName.includes("chocolate cake")) {
+    return "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&q=80"
+  }
+  
+  if (productName.includes("gummy bear")) {
+    return "https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=800&q=80"
+  }
+  
+  if (productName.includes("red velvet")) {
+    return "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&q=80"
+  }
+  
+  if (productName.includes("strawberry cupcake")) {
+    return "https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=800&q=80"
+  }
+  
+  if (productName.includes("vanilla cupcake")) {
+    return "https://images.unsplash.com/photo-1426869884541-df7117556757?w=800&q=80"
+  }
+  
+  if (productName.includes("dark chocolate") || productName.includes("truffle")) {
+    return "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=800&q=80"
+  }
+  
+  if (productName.includes("milk chocolate bar")) {
+    return "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=800&q=80"
+  }
+  
+  if (productName.includes("rainbow") || productName.includes("candies")) {
+    return "https://images.unsplash.com/photo-1559600630-08c018864142?w=800&q=80"
+  }
+  
+  if (category === "chocolate") {
+    return "https://images.unsplash.com/photo-1511381939415-e44015466834?w=800&q=80"
+  }
+  
+  if (category === "cake") {
+    return "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&q=80"
+  }
+  
+  if (category === "cupcake") {
+    return "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=800&q=80"
+  }
+  
+  if (category === "candy") {
+    return "https://images.unsplash.com/photo-1499195333224-3ce974eecb47?w=800&q=80"
+  }
+  
+  return "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80"
+}
+
 export default function HomePage() {
   const [sweets, setSweets] = useState<Sweet[]>([])
   const [chocolates, setChocolates] = useState<Sweet[]>([])
@@ -30,16 +88,12 @@ export default function HomePage() {
         
         const sweetsData = data.filter((s: Sweet) => s.category !== "chocolate").map((s: Sweet) => ({
           ...s,
-          image_url: s.image_url && !s.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) 
-            ? s.image_url 
-            : "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80"
+          image_url: getProductImage(s.name, s.category)
         }))
         
         const chocolatesData = data.filter((s: Sweet) => s.category === "chocolate").map((s: Sweet) => ({
           ...s,
-          image_url: s.image_url && !s.image_url.match(/[\u{1F300}-\u{1F9FF}]/u) 
-            ? s.image_url 
-            : "https://images.unsplash.com/photo-1511381939415-e44015466834?w=800&q=80"
+          image_url: getProductImage(s.name, s.category)
         }))
         
         setSweets(sweetsData)
@@ -122,7 +176,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {sweets.map((sweet) => (
-                  <div key={sweet.id} className="glass-card rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02]">
+                  <div key={sweet.id} className="bg-slate-900/40 backdrop-blur-sm border border-slate-800/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-cyan-500/30">
                     <div className="relative w-full h-52 bg-gradient-to-br from-slate-800/50 to-slate-900/50 overflow-hidden">
                       <Image 
                         src={sweet.image_url} 
@@ -169,7 +223,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {chocolates.map((chocolate) => (
-                  <div key={chocolate.id} className="glass-card rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02]">
+                  <div key={chocolate.id} className="bg-slate-900/40 backdrop-blur-sm border border-slate-800/50 rounded-2xl overflow-hidden group transition-all duration-500 hover:scale-[1.02] hover:border-amber-500/30">
                     <div className="relative w-full h-52 bg-gradient-to-br from-amber-900/30 to-slate-900/50 overflow-hidden">
                       <Image 
                         src={chocolate.image_url} 
