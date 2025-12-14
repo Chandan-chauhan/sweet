@@ -6,8 +6,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { signInWithGoogle } from "@/lib/actions/auth"
+import CyberBackground from "@/components/CyberBackground"
+import { Sparkles, Mail, Lock, ArrowRight } from "lucide-react"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -40,73 +41,93 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 p-4">
-      <Card className="w-full max-w-md border-rose-200 shadow-xl">
-        <CardHeader className="text-center space-y-2">
-          <div className="text-5xl mb-2">🍬</div>
-          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent">
-            Sweet Shop
-          </CardTitle>
-          <CardDescription className="text-rose-600">
-            Sign in to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#030712] p-4 relative overflow-hidden">
+      <CyberBackground />
+      
+      <div className="w-full max-w-md relative z-10">
+        <div className="glass-card rounded-3xl p-8 shadow-2xl">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 mb-6 animate-glow">
+              <Sparkles className="w-8 h-8 text-black" />
+            </div>
+            <h1 className="text-3xl font-bold gradient-text mb-2">Welcome Back</h1>
+            <p className="text-slate-400">Sign in to your account</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm border border-red-200">
+              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
                 {error}
               </div>
             )}
+            
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="border-rose-200 focus:border-rose-400"
-              />
+              <Label htmlFor="email" className="text-slate-300 text-sm font-medium">Email</Label>
+              <div className="relative">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  required
+                  className="pl-12 bg-slate-900/50 border-cyan-500/20 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 focus:ring-cyan-400/20 h-12 rounded-xl input-glow"
+                />
+              </div>
             </div>
+            
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                className="border-rose-200 focus:border-rose-400"
-              />
+              <Label htmlFor="password" className="text-slate-300 text-sm font-medium">Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  required
+                  className="pl-12 bg-slate-900/50 border-cyan-500/20 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 focus:ring-cyan-400/20 h-12 rounded-xl input-glow"
+                />
+              </div>
             </div>
+
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600"
+              className="w-full cyber-button text-black font-semibold h-12 rounded-xl text-base"
               disabled={loading}
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                  Signing in...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  Sign In
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              )}
             </Button>
           </form>
 
-          <div className="relative mt-6">
+          <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-rose-200" />
+              <span className="w-full border-t border-cyan-500/20" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-gray-500">Or continue with</span>
+              <span className="bg-[#0f172a] px-4 text-slate-500">Or continue with</span>
             </div>
           </div>
 
-          <form action={signInWithGoogle} className="mt-6">
+          <form action={signInWithGoogle}>
             <Button
               type="submit"
               variant="outline"
-              className="w-full border-rose-200 hover:bg-rose-50"
+              className="w-full bg-transparent border-cyan-500/20 text-slate-300 hover:bg-cyan-500/10 hover:border-cyan-400 h-12 rounded-xl transition-all duration-300"
             >
-              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
+              <svg className="mr-3 h-5 w-5" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                   fill="#4285F4"
@@ -128,19 +149,19 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 text-center space-y-2">
-            <Link href="/forgot-password" className="text-sm text-rose-600 hover:underline">
+          <div className="mt-8 text-center space-y-3">
+            <Link href="/forgot-password" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
               Forgot your password?
             </Link>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-slate-400">
               Don&apos;t have an account?{" "}
-              <Link href="/register" className="text-rose-600 hover:underline font-medium">
+              <Link href="/register" className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
                 Sign up
               </Link>
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }
