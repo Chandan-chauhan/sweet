@@ -6,10 +6,11 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { createClient } from "@/lib/supabase/client"
+import CyberBackground from "@/components/CyberBackground"
+import { Lock, ArrowRight, CheckCircle, Clock, Loader2, AlertTriangle } from "lucide-react"
 
-function ResetPasswordPage() {
+function ResetPasswordContent() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
@@ -63,119 +64,157 @@ function ResetPasswordPage() {
 
   if (error && error.includes("expired")) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 p-4">
-        <Card className="w-full max-w-md border-rose-200 shadow-xl">
-          <CardContent className="pt-8 text-center">
-            <div className="text-6xl mb-4">⏰</div>
-            <h2 className="text-2xl font-bold text-rose-600 mb-2">Link Expired</h2>
-            <p className="text-gray-600 mb-4">{error}</p>
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 text-sm text-left">
-              <p className="font-semibold text-amber-800 mb-2">💡 Tips:</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1">
-                <li>Reset links expire in 1 hour</li>
-                <li>Request a new reset link</li>
-                <li>Check your spam folder</li>
-                <li>Click the link immediately when received</li>
-              </ul>
+      <div className="min-h-screen flex items-center justify-center bg-[#030712] p-4 relative overflow-hidden">
+        <CyberBackground />
+        <div className="w-full max-w-md relative z-10">
+          <div className="glass-card rounded-3xl p-8 text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
+              <Clock className="w-10 h-10 text-amber-400" />
             </div>
+            <h2 className="text-2xl font-bold text-slate-100 mb-3">Link Expired</h2>
+            <p className="text-slate-400 mb-6">{error}</p>
+            
+            <div className="glass-card rounded-xl p-4 mb-6 text-left">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-amber-400 mb-2 text-sm">Tips:</p>
+                  <ul className="text-slate-400 text-sm space-y-1">
+                    <li>Reset links expire in 1 hour</li>
+                    <li>Request a new reset link</li>
+                    <li>Click the link immediately when received</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
             <Link href="/forgot-password">
-              <Button className="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600">
+              <Button className="w-full cyber-button text-black font-semibold mb-4">
                 Request New Reset Link
               </Button>
             </Link>
-            <Link href="/login" className="block mt-4 text-sm text-rose-600 hover:underline">
+            <Link href="/login" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
               Back to Login
             </Link>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     )
   }
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 p-4">
-        <Card className="w-full max-w-md border-rose-200 shadow-xl">
-          <CardContent className="pt-8 text-center">
-            <div className="text-6xl mb-4">✅</div>
-            <h2 className="text-2xl font-bold text-rose-600 mb-2">Password Updated!</h2>
-            <p className="text-gray-600">Redirecting you to login...</p>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen flex items-center justify-center bg-[#030712] p-4 relative overflow-hidden">
+        <CyberBackground />
+        <div className="w-full max-w-md relative z-10">
+          <div className="glass-card rounded-3xl p-8 text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border border-green-500/30 mb-6">
+              <CheckCircle className="w-10 h-10 text-green-400" />
+            </div>
+            <h2 className="text-2xl font-bold gradient-text mb-3">Password Updated!</h2>
+            <p className="text-slate-400">Redirecting you to login...</p>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50 p-4">
-      <Card className="w-full max-w-md border-rose-200 shadow-xl">
-        <CardHeader className="text-center space-y-2">
-          <div className="text-5xl mb-2">🔒</div>
-          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent">
-            Reset Password
-          </CardTitle>
-          <CardDescription className="text-rose-600">
-            Enter your new password
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#030712] p-4 relative overflow-hidden">
+      <CyberBackground />
+      
+      <div className="w-full max-w-md relative z-10">
+        <div className="glass-card rounded-3xl p-8 shadow-2xl">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 mb-6 animate-glow">
+              <Lock className="w-8 h-8 text-black" />
+            </div>
+            <h1 className="text-3xl font-bold gradient-text mb-2">Reset Password</h1>
+            <p className="text-slate-400">Enter your new password</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm border border-red-200">
+              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
                 {error}
               </div>
             )}
+            
             <div className="space-y-2">
-              <Label htmlFor="password">New Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={6}
-                className="border-rose-200 focus:border-rose-400"
-              />
+              <Label htmlFor="password" className="text-slate-300 text-sm font-medium">New Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Create a new password"
+                  required
+                  minLength={6}
+                  className="pl-12 bg-slate-900/50 border-cyan-500/20 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 h-12 rounded-xl input-glow"
+                />
+              </div>
             </div>
+
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={6}
-                className="border-rose-200 focus:border-rose-400"
-              />
+              <Label htmlFor="confirmPassword" className="text-slate-300 text-sm font-medium">Confirm Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm your password"
+                  required
+                  minLength={6}
+                  className="pl-12 bg-slate-900/50 border-cyan-500/20 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 h-12 rounded-xl input-glow"
+                />
+              </div>
             </div>
+
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600"
+              className="w-full cyber-button text-black font-semibold h-12 rounded-xl text-base"
               disabled={loading}
             >
-              {loading ? "Updating password..." : "Reset Password"}
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                  Updating password...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  Reset Password
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              )}
             </Button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default function ResetPasswordPageWrapper() {
+export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🔒</div>
-          <p className="text-gray-600">Loading...</p>
+      <div className="min-h-screen flex items-center justify-center bg-[#030712] p-4 relative overflow-hidden">
+        <CyberBackground />
+        <div className="w-full max-w-md relative z-10">
+          <div className="glass-card rounded-3xl p-8 text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-6">
+              <Loader2 className="w-10 h-10 text-cyan-400 animate-spin" />
+            </div>
+            <h1 className="text-2xl font-bold text-slate-100 mb-2">Reset Password</h1>
+            <p className="text-slate-400">Loading...</p>
+          </div>
         </div>
       </div>
     }>
-      <ResetPasswordPage />
+      <ResetPasswordContent />
     </Suspense>
   )
 }
